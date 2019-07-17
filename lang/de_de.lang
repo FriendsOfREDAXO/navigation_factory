@@ -1,0 +1,15 @@
+navigation_factory_title = Navigation Factory
+navigation_factory_main_title = Navigation Factory für REDAXO
+
+navigation_factory_main = Hauptseite
+navigation_factory_codeexamples = Codebeispiele
+navigation_factory_help = Hilfe
+navigation_factory_help_readme = Readme
+navigation_factory_help_changelog = Changelog
+navigation_factory_help_license = Lizenz
+
+navigation_factory_rex_nav = Hauptnavigation
+navigation_factory_rex_lang_nav = Sprachnavigation
+navigation_factory_rex_breadcrumb_nav = Breadcrumb Navigation
+navigation_factory_rex_custom_nav = Custom Navigation
+

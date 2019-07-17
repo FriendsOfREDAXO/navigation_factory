@@ -1,0 +1,25 @@
+package: navigation_factory 
+version: '2.0.1'
+author: RexDude
+supportpage: http://www.redaxo.org/de/forum/
+page:
+    title: 'translate:title'
+    perm: admin[]
+    icon: rex-icon  fa-arrow-circle-up
+    subpages:
+        main: { title: 'translate:main' }
+        codeexamples:
+            title: 'translate:codeexamples'
+            subpages:
+                rex_nav: { title: 'translate:rex_nav' }
+                rex_lang_nav: { title: 'translate:rex_lang_nav' }
+                rex_breadcrumb_nav: { title: 'translate:rex_breadcrumb_nav' }
+                rex_custom_nav: { title: 'translate:rex_custom_nav' }
+        help:
+            title: 'translate:help'
+            subpages:
+                readme: { title: 'translate:help_readme' }
+                changelog: { title: 'translate:help_changelog' }
+                license: { title: 'translate:help_license' }
+requires:
+    redaxo: '^5.0'
