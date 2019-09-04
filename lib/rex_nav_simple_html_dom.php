@@ -636,12 +636,11 @@ class rex_nav_simple_html_dom_node
         // pattern of CSS selectors, modified from mootools
         // Paperg: Add the colon to the attrbute, so that it properly finds <tag attr:ibute="something" > like google does.
         // Note: if you try to look at this attribute, yo MUST use getAttribute since $dom->x:y will fail the php syntax check.
-// Notice the \[ starting the attbute?  and the @? following?  This implies that an attribute can begin with an @ sign that is not captured.
-// This implies that an html attribute specifier may start with an @ sign that is NOT captured by the expression.
-// farther study is required to determine of this should be documented or removed.
-//        $pattern = "/([\w-:\*]*)(?:\#([\w-]+)|\.([\w-]+))?(?:\[@?(!?[\w-]+)(?:([!*^$]?=)[\"']?(.*?)[\"']?)?\])?([\/, ]+)/is";
-        $pattern = "/([\w-:\*]*)(?:\#([\w-]+)|\.([\w-]+))?(?:\[@?(!?[\w-:]+)(?:([!*^$]?=)[\"']?(.*?)[\"']?)?\])?([\/, ]+)/is";
-        preg_match_all($pattern, trim($selector_string).' ', $matches, PREG_SET_ORDER);
+        // Notice the \[ starting the attbute?  and the @? following?  This implies that an attribute can begin with an @ sign that is not captured.
+        // This implies that an html attribute specifier may start with an @ sign that is NOT captured by the expression.
+        // farther study is required to determine of this should be documented or removed.
+        $pattern = "/([\w:\*-]*)(?:\#([\w-]+))?(?:|\.([\w\.-]+))?((?:\[@?(?:!?[\w:-]+)(?:(?:[!*^$|~]?=)[\"']?(?:.*?)[\"']?)?(?:\s*?(?:[iIsS])?)?\])+)?([\/, >+~]+)/is";
+        preg_match_all($pattern,trim($selector_string) . ' ',$matches,PREG_SET_ORDER);
         if (is_object($debugObject)) {$debugObject->debugLog(2, "Matches Array: ", $matches);}
 
         $selectors = array();
@@ -768,11 +767,11 @@ class rex_nav_simple_html_dom_node
     }
 
     /**
-    * Returns true if $string is valid UTF-8 and false otherwise.
-    *
-    * @param mixed $str String to be tested
-    * @return boolean
-    */
+     * Returns true if $string is valid UTF-8 and false otherwise.
+     *
+     * @param mixed $str String to be tested
+     * @return boolean
+     */
     static function is_utf8($str)
     {
         $c=0; $b=0;
@@ -848,7 +847,7 @@ class rex_nav_simple_html_dom_node
             $attributes = array();
             preg_match_all("/([\w-]+)\s*:\s*([^;]+)\s*;?/", $this->attr['style'], $matches, PREG_SET_ORDER);
             foreach ($matches as $match) {
-              $attributes[$match[1]] = $match[2];
+                $attributes[$match[1]] = $match[2];
             }
 
             // If there is a width in the style attributes:
@@ -894,7 +893,7 @@ class rex_nav_simple_html_dom_node
         // If the class or id is specified in a SEPARATE css file thats not on the page, go get it and do what we were just doing for the ones on the page.
 
         $result = array('height' => $height,
-                        'width' => $width);
+            'width' => $width);
         return $result;
     }
 
@@ -969,48 +968,48 @@ class rex_nav_simple_html_dom
         'p'=>array('p'=>1),
         'nobr'=>array('nobr'=>1),
         'b'=>array('b'=>1),
-		'option'=>array('option'=>1),
+        'option'=>array('option'=>1),
     );
 
-	// helper functions
-	// -----------------------------------------------------------------------------
-	// get html dom from file
-	// $maxlen is defined in the code as PHP_STREAM_COPY_ALL which is defined as -1.
-	public static function file_get_html($url, $use_include_path = false, $context=null, $offset = -1, $maxLen=-1, $lowercase = true, $forceTagsClosed=true, $target_charset = DEFAULT_TARGET_CHARSET, $stripRN=true, $defaultBRText=DEFAULT_BR_TEXT, $defaultSpanText=DEFAULT_SPAN_TEXT)
-	{
-		// We DO force the tags to be terminated.
-		$dom = new rex_nav_simple_html_dom(null, $lowercase, $forceTagsClosed, $target_charset, $stripRN, $defaultBRText, $defaultSpanText);
-		// For sourceforge users: uncomment the next line and comment the retreive_url_contents line 2 lines down if it is not already done.
-		$contents = file_get_contents($url, $use_include_path, $context, $offset);
-		// Paperg - use our own mechanism for getting the contents as we want to control the timeout.
-		//$contents = retrieve_url_contents($url);
-		if (empty($contents) || strlen($contents) > MAX_FILE_SIZE)
-		{
-		    return false;
-		}
-		// The second parameter can force the selectors to all be lowercase.
-		$dom->load($contents, $lowercase, $stripRN);
-		return $dom;
-	}
+    // helper functions
+    // -----------------------------------------------------------------------------
+    // get html dom from file
+    // $maxlen is defined in the code as PHP_STREAM_COPY_ALL which is defined as -1.
+    public static function file_get_html($url, $use_include_path = false, $context=null, $offset = -1, $maxLen=-1, $lowercase = true, $forceTagsClosed=true, $target_charset = DEFAULT_TARGET_CHARSET, $stripRN=true, $defaultBRText=DEFAULT_BR_TEXT, $defaultSpanText=DEFAULT_SPAN_TEXT)
+    {
+        // We DO force the tags to be terminated.
+        $dom = new rex_nav_simple_html_dom(null, $lowercase, $forceTagsClosed, $target_charset, $stripRN, $defaultBRText, $defaultSpanText);
+        // For sourceforge users: uncomment the next line and comment the retreive_url_contents line 2 lines down if it is not already done.
+        $contents = file_get_contents($url, $use_include_path, $context, $offset);
+        // Paperg - use our own mechanism for getting the contents as we want to control the timeout.
+        //$contents = retrieve_url_contents($url);
+        if (empty($contents) || strlen($contents) > MAX_FILE_SIZE)
+        {
+            return false;
+        }
+        // The second parameter can force the selectors to all be lowercase.
+        $dom->load($contents, $lowercase, $stripRN);
+        return $dom;
+    }
 
-	// get html dom from string
-	public static function str_get_html($str, $lowercase=true, $forceTagsClosed=true, $target_charset = DEFAULT_TARGET_CHARSET, $stripRN=true, $defaultBRText=DEFAULT_BR_TEXT, $defaultSpanText=DEFAULT_SPAN_TEXT)
-	{
-		$dom = new rex_nav_simple_html_dom(null, $lowercase, $forceTagsClosed, $target_charset, $stripRN, $defaultBRText, $defaultSpanText);
-		if (empty($str) || strlen($str) > MAX_FILE_SIZE)
-		{
-		    $dom->clear();
-		    return false;
-		}
-		$dom->load($str, $lowercase, $stripRN);
-		return $dom;
-	}
+    // get html dom from string
+    public static function str_get_html($str, $lowercase=true, $forceTagsClosed=true, $target_charset = DEFAULT_TARGET_CHARSET, $stripRN=true, $defaultBRText=DEFAULT_BR_TEXT, $defaultSpanText=DEFAULT_SPAN_TEXT)
+    {
+        $dom = new rex_nav_simple_html_dom(null, $lowercase, $forceTagsClosed, $target_charset, $stripRN, $defaultBRText, $defaultSpanText);
+        if (empty($str) || strlen($str) > MAX_FILE_SIZE)
+        {
+            $dom->clear();
+            return false;
+        }
+        $dom->load($str, $lowercase, $stripRN);
+        return $dom;
+    }
 
-	// dump html dom tree
-	public static function dump_html_tree($node, $show_attr=true, $deep=0)
-	{
-		$node->dump($node);
-	}
+    // dump html dom tree
+    public static function dump_html_tree($node, $show_attr=true, $deep=0)
+    {
+        $node->dump($node);
+    }
 
 
     function __construct($str=null, $lowercase=true, $forceTagsClosed=true, $target_charset=DEFAULT_TARGET_CHARSET, $stripRN=true, $defaultBRText=DEFAULT_BR_TEXT, $defaultSpanText=DEFAULT_SPAN_TEXT)
@@ -1362,7 +1361,7 @@ class rex_nav_simple_html_dom
             return true;
         }
 
-        if (!preg_match("/^[\w-:]+$/", $tag)) {
+        if (!preg_match('/^\w[\w:-]*$/', $tag)) {
             $node->_[HDOM_INFO_TEXT] = '<' . $tag . $this->copy_until('<>');
             if ($this->char==='<') {
                 $this->link_nodes($node, false);
