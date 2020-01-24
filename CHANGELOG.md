@@ -1,6 +1,10 @@
 Navigation Factory - Changelog
 ==============================
 
+### Version 2.0.2 - 24. Januar 2020
+
+* fix für PHP 7.3
+
 ### Version 2.0.1 - 09. Juni 2018
 
 * Link entfernt auf Startseite, thx@alexplusde
