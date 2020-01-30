@@ -50,5 +50,6 @@ MIT-Lizenz, siehe `LICENSE.md` des AddOns
 Credits
 -------
 
+* Entwickelt von RexDude
 * [PHP Simple HTML DOM Parser](http://simplehtmldom.sourceforge.net/) by S.C. Chen
 * Icon von [simpleicon.com](http://simpleicon.com)
