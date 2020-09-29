@@ -202,9 +202,10 @@ class rex_nav {
 				if (is_array($this->listItemClassFromCategoryId) && isset($this->listItemClassFromCategoryId[$cat->getId()])) {
 					$cssClasses .= ' ' . $this->listItemClassFromCategoryId[$cat->getId()];
 				}
-
+				
+				 
 				if ($this->listItemClassFromMetaField != '' && $cat->getValue($this->listItemClassFromMetaField) != '') {
-					$cssClasses .= ' ' . $cat->getValue($this->listItemClassFromMetaField);
+					$cssClasses .= ' ' . trim(str_replace("|", " ", $cat->getValue($this->listItemClassFromMetaField)));
 				}
 
 				// li id
