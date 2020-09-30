@@ -1,7 +1,7 @@
 Navigation Factory - Changelog
 ==============================
 
-### Version 2.0.2 - 24. Januar 2020
+### Version 2.0.3 - 29. September 2020
 
 * fix für PHP 7.3 and 7.4
 * fix bei der Verwendung von multiple Klassen (Danke @fietstouring)
